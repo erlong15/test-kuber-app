@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ruby-server
+  namespace: default
+  labels:
+    app: ruby-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ruby-server
+  template:
+    metadata:
+      labels:
+        app: ruby-server
+      name: ruby-server
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 0
+      containers:
+      - image: erlong1507/ruby-server:v1.0
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: '100m'
+            memory: '100Mi'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: default
+  labels:
+    app: ruby-server
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: 80
+      port: 80
+  selector:
+    app: ruby-server

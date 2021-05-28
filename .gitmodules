@@ -1,0 +1,6 @@
+[submodule "http_server"]
+	path = http_server
+	url = https://github.com/sawasy/http_server.git
+[submodule "docker-app/http_server"]
+	path = docker-app/http_server
+	url = https://github.com/sawasy/http_server.git
